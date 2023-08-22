@@ -51,7 +51,7 @@
         android:layout_marginHorizontal="@dimen/margin_12dp"
         android:layout_marginVertical="@dimen/margin_8dp"
         android:ellipsize="end"
-        android:textSize="15sp"
+        android:textSize="20sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@id/main_image_view"
@@ -79,6 +79,7 @@
             android:src="@drawable/icon_chat" />
 
         <TextView
+            android:id="@+id/item_chat"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             tools:text="123" />
@@ -91,6 +92,7 @@
             android:src="@drawable/icon_favorite" />
 
         <TextView
+            android:id="@+id/item_liked"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             tools:text="12" />
