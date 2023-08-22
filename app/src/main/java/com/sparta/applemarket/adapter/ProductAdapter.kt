@@ -7,8 +7,10 @@ import androidx.recyclerview.widget.RecyclerView
 import com.sparta.applemarket.R
 import com.sparta.applemarket.databinding.ItemSaleProductBinding
 import com.sparta.applemarket.model.Product
+import java.text.DecimalFormat
 
-class ProductAdapter(private val context: Context) : RecyclerView.Adapter<ProductAdapter.ViewHolder>() {
+class ProductAdapter(private val context: Context) :
+    RecyclerView.Adapter<ProductAdapter.ViewHolder>() {
     private val datas = arrayListOf<Product>()
 
     fun addItems(items: List<Product>) {
@@ -41,10 +43,17 @@ class ProductAdapter(private val context: Context) : RecyclerView.Adapter<Produc
                 }
                 itemTitle.text = model.productName
                 itemAddress.text = model.address
-                "${model.price}${context.getString(R.string.won)}".also { itemPrice.text = it }
+                "${thousandsByComma(model.price)}${context.getString(R.string.won)}".also {
+                    itemPrice.text = it
+                }
                 itemChat.text = "${model.chatting}"
                 itemLiked.text = "${model.liked}"
             }
+        }
+
+        private fun thousandsByComma(price: Int): String {
+            val format = DecimalFormat("#,###")
+            return format.format(price)
         }
     }
 }
