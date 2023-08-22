@@ -1,7 +1,10 @@
 package com.sparta.applemarket
 
+import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.activity.OnBackPressedCallback
+import androidx.appcompat.app.AlertDialog
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.sparta.applemarket.adapter.ProductAdapter
 import com.sparta.applemarket.data.ProductsData
@@ -9,11 +12,18 @@ import com.sparta.applemarket.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
+    private val callback = object : OnBackPressedCallback(true) {
+        override fun handleOnBackPressed() {
+            showDialog()
+        }
+    }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
         initRecyclerView()
+        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU)
+            this.onBackPressedDispatcher.addCallback(callback)
     }
 
     private fun initRecyclerView() = with(binding) {
@@ -22,5 +32,22 @@ class MainActivity : AppCompatActivity() {
             addItems(list)
         }
         mainRecyclerView.layoutManager = LinearLayoutManager(this@MainActivity)
+    }
+
+    override fun onBackPressed() {
+        showDialog()
+    }
+    private fun showDialog() {
+        val builder = AlertDialog.Builder(this)
+
+        builder.setIcon(R.drawable.dialog_done)
+            .setTitle(getString(R.string.close))
+            .setMessage(getString(R.string.really_close))
+            .setCancelable(false)
+            .setPositiveButton(getString(R.string.yes)){ _, _ ->
+                finish()
+            }.setNegativeButton(getString(R.string.no), null)
+            .create()
+            .show()
     }
 }

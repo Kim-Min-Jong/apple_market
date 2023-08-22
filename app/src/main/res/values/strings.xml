@@ -45,6 +45,10 @@
     <string name="address_9">원주시 명륜2동</string>
     <string name="address_10">중구 동화동</string>
     <string name="won">원</string>
+    <string name="close">종료</string>
+    <string name="really_close">정말 종료하시겠습니까?</string>
+    <string name="yes">확인</string>
+    <string name="no">취소</string>
 
 
 </resources>
