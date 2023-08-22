@@ -49,6 +49,8 @@
     <string name="really_close">정말 종료하시겠습니까?</string>
     <string name="yes">확인</string>
     <string name="no">취소</string>
+    <string name="notification_title">키워드 알림</string>
+    <string name="notification_text">설정한 키워드에 대한 알림이 도착했습니다!</string>
 
 
 </resources>
