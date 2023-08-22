@@ -1,7 +1,6 @@
 package com.sparta.applemarket
 
-import android.app.Application
-import android.content.Context
+import android.content.Intent
 import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -52,8 +51,11 @@ class MainActivity : AppCompatActivity() {
         adapter.setOnItemClickListener(object: ItemClickListener {
             // 상세정보 페이지로
             override fun onItemClick(position: Int) {
-                val list = ProductsData(this@MainActivity as Context).getList()
-                println(list[position])
+                val list = adapter.getItems()
+                val intent = Intent(this@MainActivity, DetailProductActivity::class.java).apply {
+                    putExtra("product", list[position])
+                }
+                startActivity(intent)
             }
 
             // TODO 선택과제 2

@@ -23,6 +23,7 @@ class ProductAdapter(private val context: Context) :
         datas.addAll(items)
         notifyDataSetChanged()
     }
+    fun getItems() = datas
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder =
         ViewHolder(
