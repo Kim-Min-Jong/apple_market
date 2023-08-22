@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="spinner_width">100dp</dimen>
+    <dimen name="icon_default">24dp</dimen>
+    <dimen name="spinner_start">48dp</dimen>
+    <dimen name="image_button_margin">24dp</dimen>
+    <dimen name="margin_12dp">12dp</dimen>
+    <dimen name="item_image_view">100dp</dimen>
+    <dimen name="margin_8dp">8dp</dimen>
+    <dimen name="margin_3dp">3dp</dimen>
+</resources>
