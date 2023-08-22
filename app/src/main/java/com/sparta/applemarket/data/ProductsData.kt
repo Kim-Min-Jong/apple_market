@@ -4,7 +4,7 @@ import android.content.Context
 import com.sparta.applemarket.R
 import com.sparta.applemarket.model.Product
 
-class ProductsData(val context: Context) {
+class ProductsData(private val context: Context) {
     private val list = listOf(
         Product(
             1,
