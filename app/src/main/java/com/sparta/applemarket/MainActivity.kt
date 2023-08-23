@@ -4,10 +4,16 @@ import android.content.Intent
 import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
+import android.view.View
+import android.view.animation.AnimationUtils
 import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.app.AlertDialog
+import androidx.core.view.isVisible
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.sparta.applemarket.adapter.ProductAdapter
 import com.sparta.applemarket.adapter.listener.ItemClickListener
 import com.sparta.applemarket.data.ProductsData
@@ -22,6 +28,29 @@ class MainActivity : AppCompatActivity() {
             showDialog()
         }
     }
+    private val fadeInAnimation by lazy {
+        AnimationUtils.loadAnimation(this@MainActivity, R.anim.fade_in)
+    }
+    private val fadeOutAnimation by lazy {
+        AnimationUtils.loadAnimation(this@MainActivity, R.anim.fade_out)
+    }
+
+    private val scrollListener by lazy {
+        object: RecyclerView.OnScrollListener() {
+            override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+                super.onScrolled(recyclerView, dx, dy)
+                val view = binding.fabUp
+                if(binding.mainRecyclerView.canScrollVertically(-1)){
+                    view.startAnimation(fadeInAnimation)
+                    delayVisibility(view, true)
+                } else {
+
+                    view.startAnimation(fadeOutAnimation)
+                    delayVisibility(view, false)
+                }
+            }
+        }
+    }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
@@ -31,10 +60,13 @@ class MainActivity : AppCompatActivity() {
         if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU)
             this.onBackPressedDispatcher.addCallback(callback)
     }
-    private fun initButton() {
-        binding.notificationButton.setOnClickListener {
-            Toast.makeText(this, "asd", Toast.LENGTH_SHORT).show()
+    private fun initButton() = with(binding) {
+        notificationButton.setOnClickListener {
+            Toast.makeText(this@MainActivity, "asd", Toast.LENGTH_SHORT).show()
             ProductNotification(this@MainActivity).runNotification()
+        }
+        fabUp.setOnClickListener {
+            mainRecyclerView.scrollToPosition(0)
         }
     }
 
@@ -45,6 +77,7 @@ class MainActivity : AppCompatActivity() {
         }
         mainRecyclerView.adapter = adapter
         mainRecyclerView.layoutManager = LinearLayoutManager(this@MainActivity)
+        mainRecyclerView.addOnScrollListener(scrollListener)
         setClickListener()
     }
     private fun setClickListener() {
@@ -82,5 +115,8 @@ class MainActivity : AppCompatActivity() {
         showDialog()
     }
 
-
+    private fun delayVisibility(view: View, isVisible: Boolean) =
+        Handler(Looper.getMainLooper()).postDelayed({
+            view.isVisible = isVisible
+        }, 500)
 }
