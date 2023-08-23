@@ -5,4 +5,5 @@
     <color name="address_color">#FF9C9C9C</color>
     <color name="circle_image_view">#FFFF6839</color>
     <color name="temperature">#FF07868A</color>
+    <color name="fab_clicked">#FF1653A6</color>
 </resources>
