@@ -30,6 +30,17 @@ class ProductAdapter(private val context: Context) :
         datas.remove(item)
         notifyItemRemoved(position)
     }
+
+    fun updateItem(id: Int, isChecked: Boolean) {
+        datas.find { it.id == id }?.run {
+            isLiked = isChecked
+            if(isChecked)
+                liked++
+            else
+                liked--
+        }
+        notifyDataSetChanged()
+    }
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder =
         ViewHolder(
             ItemSaleProductBinding.inflate(
@@ -68,6 +79,11 @@ class ProductAdapter(private val context: Context) :
                     itemPrice.text = it
                 }
                 itemChat.text = "${model.chatting}"
+                if(model.isLiked) {
+                    iconFavoriteActivated.setImageResource(R.drawable.icon_favorite_activated)
+                } else {
+                    iconFavoriteActivated.setImageResource(R.drawable.icon_favorite)
+                }
                 itemLiked.text = "${model.liked}"
             }
         }

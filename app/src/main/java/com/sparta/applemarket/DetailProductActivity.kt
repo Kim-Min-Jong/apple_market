@@ -1,11 +1,13 @@
 package com.sparta.applemarket
 
+import android.content.Intent
 import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import com.sparta.applemarket.databinding.ActivityDetailProductBinding
 import com.sparta.applemarket.model.Product
 import com.sparta.applemarket.util.Format
+import com.sparta.applemarket.util.ViewUtil.appearSnackBar
 
 class DetailProductActivity : AppCompatActivity() {
     private lateinit var binding: ActivityDetailProductBinding
@@ -33,6 +35,24 @@ class DetailProductActivity : AppCompatActivity() {
         "${Format.thousandsByComma(product.price)}${getString(R.string.won)}".also {
             productPrice.text = it
         }
+        likedCheckBox.isChecked = product.isLiked
+
+        likedCheckBox.setOnCheckedChangeListener { view, isChecked ->
+            putLikedData(product, isChecked)
+        }
+    }
+    private fun putLikedData(product: Product, isChecked: Boolean) {
+        val message = if(isChecked){
+            R.string.add_interesting_product
+        } else {
+            R.string.remove_interesting_product
+        }
+        binding.root.appearSnackBar(getString(message))
+        val intent = Intent(this@DetailProductActivity, MainActivity::class.java).apply {
+            putExtra("id", product.id)
+            putExtra("liked", isChecked)
+        }
+        setResult(RESULT_OK, intent)
     }
     private fun initButton() = with(binding){
         backButton.setOnClickListener {

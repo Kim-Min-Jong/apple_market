@@ -1,5 +1,6 @@
 package com.sparta.applemarket
 
+import android.app.Activity
 import android.content.Intent
 import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
@@ -10,6 +11,7 @@ import android.view.View
 import android.view.animation.AnimationUtils
 import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -54,6 +56,15 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    private val activityLauncher =
+        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
+            if (it.resultCode == Activity.RESULT_OK) {
+                val id = it.data?.getIntExtra("id", 0) ?: 0
+                val isLiked = it.data?.getBooleanExtra("liked", false) ?: false
+                adapter.updateItem(id, isLiked)
+            }
+        }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
@@ -76,6 +87,7 @@ class MainActivity : AppCompatActivity() {
 
     private fun initRecyclerView() = with(binding) {
         val list = ProductsData(this@MainActivity).getList()
+//            .onEach { it.liked++ }
         adapter = ProductAdapter(this@MainActivity).apply {
             addItems(list)
         }
@@ -93,7 +105,7 @@ class MainActivity : AppCompatActivity() {
                 val intent = Intent(this@MainActivity, DetailProductActivity::class.java).apply {
                     putExtra("product", list[position])
                 }
-                startActivity(intent)
+                activityLauncher.launch(intent)
             }
 
             // TODO 선택과제 2

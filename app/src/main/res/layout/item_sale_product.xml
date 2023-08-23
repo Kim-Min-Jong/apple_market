@@ -85,6 +85,7 @@
             tools:text="123" />
 
         <ImageView
+            android:id="@+id/icon_favorite_activated"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/margin_3dp"
