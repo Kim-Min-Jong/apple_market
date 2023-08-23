@@ -3,4 +3,6 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
     <color name="address_color">#FF9C9C9C</color>
+    <color name="circle_image_view">#FFFF6839</color>
+    <color name="temperature">#FF07868A</color>
 </resources>

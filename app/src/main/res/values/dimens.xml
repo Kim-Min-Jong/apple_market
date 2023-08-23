@@ -8,4 +8,6 @@
     <dimen name="item_image_view">100dp</dimen>
     <dimen name="margin_8dp">8dp</dimen>
     <dimen name="margin_3dp">3dp</dimen>
+    <dimen name="margin_18dp">18dp</dimen>
+    <dimen name="margin_5dp">5dp</dimen>
 </resources>

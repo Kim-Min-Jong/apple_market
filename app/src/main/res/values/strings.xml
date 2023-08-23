@@ -51,6 +51,9 @@
     <string name="no">취소</string>
     <string name="notification_title">키워드 알림</string>
     <string name="notification_text">설정한 키워드에 대한 알림이 도착했습니다!</string>
+    <string name="manner_text"><u>매너온도</u></string>
+    <string name="lets_chat">채팅하기</string>
+    <string name="manner_celsius">39.3℃</string>
 
 
 </resources>
