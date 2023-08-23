@@ -8,6 +8,7 @@ import com.sparta.applemarket.R
 import com.sparta.applemarket.adapter.listener.ItemClickListener
 import com.sparta.applemarket.databinding.ItemSaleProductBinding
 import com.sparta.applemarket.model.Product
+import com.sparta.applemarket.util.Format
 import java.text.DecimalFormat
 
 class ProductAdapter(private val context: Context) :
@@ -59,7 +60,7 @@ class ProductAdapter(private val context: Context) :
                 }
                 itemTitle.text = model.productName
                 itemAddress.text = model.address
-                "${thousandsByComma(model.price)}${context.getString(R.string.won)}".also {
+                "${Format.thousandsByComma(model.price)}${context.getString(R.string.won)}".also {
                     itemPrice.text = it
                 }
                 itemChat.text = "${model.chatting}"
@@ -67,9 +68,6 @@ class ProductAdapter(private val context: Context) :
             }
         }
 
-        private fun thousandsByComma(price: Int): String {
-            val format = DecimalFormat("#,###")
-            return format.format(price)
-        }
+
     }
 }
