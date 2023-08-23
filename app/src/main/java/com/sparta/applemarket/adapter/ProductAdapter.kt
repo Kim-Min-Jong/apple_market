@@ -9,7 +9,7 @@ import com.sparta.applemarket.adapter.listener.ItemClickListener
 import com.sparta.applemarket.databinding.ItemSaleProductBinding
 import com.sparta.applemarket.model.Product
 import com.sparta.applemarket.util.Format
-import java.text.DecimalFormat
+
 
 class ProductAdapter(private val context: Context) :
     RecyclerView.Adapter<ProductAdapter.ViewHolder>() {
@@ -26,6 +26,10 @@ class ProductAdapter(private val context: Context) :
     }
     fun getItems() = datas
 
+    fun removeItem(item: Product, position: Int) {
+        datas.remove(item)
+        notifyItemRemoved(position)
+    }
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder =
         ViewHolder(
             ItemSaleProductBinding.inflate(

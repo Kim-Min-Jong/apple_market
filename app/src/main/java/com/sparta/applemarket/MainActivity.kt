@@ -10,7 +10,6 @@ import android.view.View
 import android.view.animation.AnimationUtils
 import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
-import androidx.appcompat.app.AlertDialog
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -18,14 +17,17 @@ import com.sparta.applemarket.adapter.ProductAdapter
 import com.sparta.applemarket.adapter.listener.ItemClickListener
 import com.sparta.applemarket.data.ProductsData
 import com.sparta.applemarket.databinding.ActivityMainBinding
+import com.sparta.applemarket.model.Product
 import com.sparta.applemarket.notification.ProductNotification
+import com.sparta.applemarket.util.ContextUtil.toast
+import com.sparta.applemarket.util.DialogUtil
 
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
     private lateinit var adapter: ProductAdapter
     private val callback = object : OnBackPressedCallback(true) {
         override fun handleOnBackPressed() {
-            showDialog()
+            showCloseDialog()
         }
     }
     private val fadeInAnimation by lazy {
@@ -36,11 +38,11 @@ class MainActivity : AppCompatActivity() {
     }
 
     private val scrollListener by lazy {
-        object: RecyclerView.OnScrollListener() {
+        object : RecyclerView.OnScrollListener() {
             override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
                 super.onScrolled(recyclerView, dx, dy)
                 val view = binding.fabUp
-                if(binding.mainRecyclerView.canScrollVertically(-1)){
+                if (binding.mainRecyclerView.canScrollVertically(-1)) {
                     view.startAnimation(fadeInAnimation)
                     delayVisibility(view, true)
                 } else {
@@ -51,15 +53,17 @@ class MainActivity : AppCompatActivity() {
             }
         }
     }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
         initRecyclerView()
         initButton()
-        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU)
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU)
             this.onBackPressedDispatcher.addCallback(callback)
     }
+
     private fun initButton() = with(binding) {
         notificationButton.setOnClickListener {
             Toast.makeText(this@MainActivity, "asd", Toast.LENGTH_SHORT).show()
@@ -80,11 +84,12 @@ class MainActivity : AppCompatActivity() {
         mainRecyclerView.addOnScrollListener(scrollListener)
         setClickListener()
     }
+
     private fun setClickListener() {
-        adapter.setOnItemClickListener(object: ItemClickListener {
+        adapter.setOnItemClickListener(object : ItemClickListener {
+            val list = adapter.getItems()
             // 상세정보 페이지로
             override fun onItemClick(position: Int) {
-                val list = adapter.getItems()
                 val intent = Intent(this@MainActivity, DetailProductActivity::class.java).apply {
                     putExtra("product", list[position])
                 }
@@ -93,26 +98,35 @@ class MainActivity : AppCompatActivity() {
 
             // TODO 선택과제 2
             override fun onLongClick(position: Int) {
-
+                showRemoveItemDialog(list[position], position)
             }
 
         })
     }
 
-    private fun showDialog() {
-        val builder = AlertDialog.Builder(this)
-        builder.setIcon(R.drawable.dialog_done)
-            .setTitle(getString(R.string.close))
-            .setMessage(getString(R.string.really_close))
-            .setCancelable(false)
-            .setPositiveButton(getString(R.string.yes)){ _, _ ->
-                finish()
-            }.setNegativeButton(getString(R.string.no), null)
-            .create()
-            .show()
-    }
+    private fun showRemoveItemDialog(product: Product, position: Int) = DialogUtil.showDialog(
+        this@MainActivity,
+        R.drawable.icon_delete,
+        R.string.remove_product,
+        R.string.really_remove_product,
+        R.string.yes,
+        R.string.no,
+        { adapter.removeItem(product, position) },
+        { toast(getString(R.string.cancel_remove)) }
+    )
+
+    private fun showCloseDialog() = DialogUtil.showDialog(
+        this@MainActivity,
+        R.drawable.dialog_done,
+        R.string.close,
+        R.string.really_close,
+        R.string.yes,
+        R.string.no,
+        { finish() },
+        {})
+
     override fun onBackPressed() {
-        showDialog()
+        showCloseDialog()
     }
 
     private fun delayVisibility(view: View, isVisible: Boolean) =

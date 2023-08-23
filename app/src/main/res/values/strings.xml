@@ -54,6 +54,9 @@
     <string name="manner_text"><u>매너온도</u></string>
     <string name="lets_chat">채팅하기</string>
     <string name="manner_celsius">39.3℃</string>
+    <string name="remove_product">상품 삭제</string>
+    <string name="really_remove_product">상품을 정말로 삭제하시겠습니까?</string>
+    <string name="cancel_remove">삭제를 취소하셨습니다.</string>
 
 
 </resources>
