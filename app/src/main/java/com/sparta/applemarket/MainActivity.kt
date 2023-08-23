@@ -66,7 +66,7 @@ class MainActivity : AppCompatActivity() {
             ProductNotification(this@MainActivity).runNotification()
         }
         fabUp.setOnClickListener {
-            mainRecyclerView.scrollToPosition(0)
+            mainRecyclerView.smoothScrollToPosition(0)
         }
     }
 
