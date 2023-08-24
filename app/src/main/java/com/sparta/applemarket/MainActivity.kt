@@ -59,9 +59,12 @@ class MainActivity : AppCompatActivity() {
     private val activityLauncher =
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
             if (it.resultCode == Activity.RESULT_OK) {
-                val id = it.data?.getIntExtra("id", 0) ?: 0
+                val id = it.data?.getIntExtra("id", -1) ?: -1
+                val size = it.data?.getIntExtra("count", 0) ?: 0
                 val isLiked = it.data?.getBooleanExtra("liked", false) ?: false
-                adapter.updateItem(id, isLiked)
+                if(size % 2 != 0){
+                    adapter.updateItem(id, isLiked)
+                }
             }
         }
 
