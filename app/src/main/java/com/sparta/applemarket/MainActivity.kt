@@ -87,7 +87,6 @@ class MainActivity : AppCompatActivity() {
 
     private fun initRecyclerView() = with(binding) {
         val list = ProductsData(this@MainActivity).getList()
-//            .onEach { it.liked++ }
         adapter = ProductAdapter(this@MainActivity).apply {
             addItems(list)
         }
@@ -108,11 +107,9 @@ class MainActivity : AppCompatActivity() {
                 activityLauncher.launch(intent)
             }
 
-            // TODO 선택과제 2
             override fun onLongClick(position: Int) {
                 showRemoveItemDialog(list[position], position)
             }
-
         })
     }
 
@@ -137,9 +134,8 @@ class MainActivity : AppCompatActivity() {
         { finish() },
         {})
 
-    override fun onBackPressed() {
+    override fun onBackPressed() =
         showCloseDialog()
-    }
 
     private fun delayVisibility(view: View, isVisible: Boolean) =
         Handler(Looper.getMainLooper()).postDelayed({
