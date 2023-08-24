@@ -36,11 +36,12 @@ class DetailProductActivity : AppCompatActivity() {
         "${Format.thousandsByComma(product.price)}${getString(R.string.won)}".also {
             productPrice.text = it
         }
-        likedCheckBox.isChecked = product.isLiked
-
-        likedCheckBox.setOnCheckedChangeListener { view, isChecked ->
-            count++
-            putLikedData(product, isChecked)
+        likedCheckBox.run {
+            isChecked = product.isLiked
+            setOnCheckedChangeListener { _, isChecked ->
+                count++
+                putLikedData(product, isChecked)
+            }
         }
     }
     private fun putLikedData(product: Product, isChecked: Boolean) {
