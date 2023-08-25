@@ -26,7 +26,7 @@ import com.sparta.applemarket.util.DialogUtil
 
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
-    private lateinit var adapter: ProductAdapter
+    private lateinit var productAdapter: ProductAdapter
     private val callback = object : OnBackPressedCallback(true) {
         override fun handleOnBackPressed() {
             showCloseDialog()
@@ -48,7 +48,6 @@ class MainActivity : AppCompatActivity() {
                     view.startAnimation(fadeInAnimation)
                     delayVisibility(view, true)
                 } else {
-
                     view.startAnimation(fadeOutAnimation)
                     delayVisibility(view, false)
                 }
@@ -59,9 +58,12 @@ class MainActivity : AppCompatActivity() {
     private val activityLauncher =
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
             if (it.resultCode == Activity.RESULT_OK) {
-                val id = it.data?.getIntExtra("id", 0) ?: 0
+                val id = it.data?.getIntExtra("id", -1) ?: -1
+                val size = it.data?.getIntExtra("count", 0) ?: 0
                 val isLiked = it.data?.getBooleanExtra("liked", false) ?: false
-                adapter.updateItem(id, isLiked)
+                if(size % 2 != 0){
+                    productAdapter.updateItem(id, isLiked)
+                }
             }
         }
 
@@ -77,7 +79,6 @@ class MainActivity : AppCompatActivity() {
 
     private fun initButton() = with(binding) {
         notificationButton.setOnClickListener {
-            Toast.makeText(this@MainActivity, "asd", Toast.LENGTH_SHORT).show()
             ProductNotification(this@MainActivity).runNotification()
         }
         fabUp.setOnClickListener {
@@ -87,18 +88,20 @@ class MainActivity : AppCompatActivity() {
 
     private fun initRecyclerView() = with(binding) {
         val list = ProductsData(this@MainActivity).getList()
-        adapter = ProductAdapter(this@MainActivity).apply {
+        productAdapter = ProductAdapter(this@MainActivity).apply {
             addItems(list)
         }
-        mainRecyclerView.adapter = adapter
-        mainRecyclerView.layoutManager = LinearLayoutManager(this@MainActivity)
-        mainRecyclerView.addOnScrollListener(scrollListener)
+        mainRecyclerView.run {
+            adapter = productAdapter
+            layoutManager = LinearLayoutManager(this@MainActivity)
+            addOnScrollListener(scrollListener)
+        }
         setClickListener()
     }
 
     private fun setClickListener() {
-        adapter.setOnItemClickListener(object : ItemClickListener {
-            val list = adapter.getItems()
+        productAdapter.setOnItemClickListener(object : ItemClickListener {
+            val list = productAdapter.getItems()
             // 상세정보 페이지로
             override fun onItemClick(position: Int) {
                 val intent = Intent(this@MainActivity, DetailProductActivity::class.java).apply {
@@ -108,19 +111,19 @@ class MainActivity : AppCompatActivity() {
             }
 
             override fun onLongClick(position: Int) {
-                showRemoveItemDialog(list[position], position)
+                showRemoveItemDialog(position)
             }
         })
     }
 
-    private fun showRemoveItemDialog(product: Product, position: Int) = DialogUtil.showDialog(
+    private fun showRemoveItemDialog(position: Int) = DialogUtil.showDialog(
         this@MainActivity,
         R.drawable.icon_delete,
         R.string.remove_product,
         R.string.really_remove_product,
         R.string.yes,
         R.string.no,
-        { adapter.removeItem(product, position) },
+        { productAdapter.removeItem(position) },
         { toast(getString(R.string.cancel_remove)) }
     )
 

@@ -26,8 +26,8 @@ class ProductAdapter(private val context: Context) :
     }
     fun getItems() = datas
 
-    fun removeItem(item: Product, position: Int) {
-        datas.remove(item)
+    fun removeItem(position: Int) {
+        datas.removeAt(position)
         notifyItemRemoved(position)
     }
 

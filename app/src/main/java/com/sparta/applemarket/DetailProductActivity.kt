@@ -11,6 +11,7 @@ import com.sparta.applemarket.util.ViewUtil.appearSnackBar
 
 class DetailProductActivity : AppCompatActivity() {
     private lateinit var binding: ActivityDetailProductBinding
+    private var count = 0
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityDetailProductBinding.inflate(layoutInflater)
@@ -35,10 +36,12 @@ class DetailProductActivity : AppCompatActivity() {
         "${Format.thousandsByComma(product.price)}${getString(R.string.won)}".also {
             productPrice.text = it
         }
-        likedCheckBox.isChecked = product.isLiked
-
-        likedCheckBox.setOnCheckedChangeListener { view, isChecked ->
-            putLikedData(product, isChecked)
+        likedCheckBox.run {
+            isChecked = product.isLiked
+            setOnCheckedChangeListener { _, isChecked ->
+                count++
+                putLikedData(product, isChecked)
+            }
         }
     }
     private fun putLikedData(product: Product, isChecked: Boolean) {
@@ -51,6 +54,7 @@ class DetailProductActivity : AppCompatActivity() {
         val intent = Intent(this@DetailProductActivity, MainActivity::class.java).apply {
             putExtra("id", product.id)
             putExtra("liked", isChecked)
+            putExtra("count", count)
         }
         setResult(RESULT_OK, intent)
     }
