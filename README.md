@@ -45,7 +45,6 @@ Android SDK 33 사용
     - 메인으로 나오면 ```registerForAcitivityResult```로 구현해 놓은 activityLauncher에서 id와 좋아요 여부(T, F)를 받고 RecyclerView Adapter로 보내 리사이클러 뷰를 업데이트 시킴
 
 
-[과제 정리](https://aaapple.tistory.com/66#article-2--%EC%88%99%EB%A0%A8-%EA%B0%9C%EC%9D%B8-%EA%B3%BC%EC%A0%9C-%EC%A0%95%EB%A6%AC)
-
-[영상1](https://tv.kakao.com/v/440556925)
-[영상2](https://github.com/Kim-Min-Jong/apple_market/assets/79445881/2e37777a-bb0e-49fd-80c8-25a0dc7a7c1c)
+[과제 정리](https://aaapple.tistory.com/66#article-2--%EC%88%99%EB%A0%A8-%EA%B0%9C%EC%9D%B8-%EA%B3%BC%EC%A0%9C-%EC%A0%95%EB%A6%AC)  
+  
+[시연 영상](https://tv.kakao.com/channel/4395390/cliplink/440676837)  
