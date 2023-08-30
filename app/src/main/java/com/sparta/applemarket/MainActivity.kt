@@ -9,7 +9,6 @@ import android.os.Handler
 import android.os.Looper
 import android.view.View
 import android.view.animation.AnimationUtils
-import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.view.isVisible
@@ -19,10 +18,10 @@ import com.sparta.applemarket.adapter.ProductAdapter
 import com.sparta.applemarket.adapter.listener.ItemClickListener
 import com.sparta.applemarket.data.ProductsData
 import com.sparta.applemarket.databinding.ActivityMainBinding
-import com.sparta.applemarket.model.Product
 import com.sparta.applemarket.notification.ProductNotification
 import com.sparta.applemarket.util.ContextUtil.toast
 import com.sparta.applemarket.util.DialogUtil
+import com.sparta.applemarket.util.RecyclerViewDecoration
 
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
@@ -95,6 +94,7 @@ class MainActivity : AppCompatActivity() {
             adapter = productAdapter
             layoutManager = LinearLayoutManager(this@MainActivity)
             addOnScrollListener(scrollListener)
+            addItemDecoration(RecyclerViewDecoration())
         }
         setClickListener()
     }

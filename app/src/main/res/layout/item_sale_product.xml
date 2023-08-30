@@ -30,7 +30,6 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintBottom_toTopOf="@id/divide_item"
         android:orientation="vertical"
         >
         <TextView
@@ -117,15 +116,5 @@
         </LinearLayout>
 
     </LinearLayout>
-    <View
-        android:id="@+id/divide_item"
-        android:layout_width="0dp"
-        android:layout_height="1dp"
-        android:layout_marginTop="@dimen/margin_12dp"
-        android:background="@color/address_color"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/main_linear_layout"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
