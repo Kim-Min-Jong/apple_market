@@ -86,7 +86,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun initRecyclerView() = with(binding) {
-        val list = ProductsData(this@MainActivity).getList()
+        val list = ProductsData(this@MainActivity).list
         productAdapter = ProductAdapter(this@MainActivity).apply {
             addItems(list)
         }
@@ -101,7 +101,7 @@ class MainActivity : AppCompatActivity() {
 
     private fun setClickListener() {
         productAdapter.setOnItemClickListener(object : ItemClickListener {
-            val list = productAdapter.getItems()
+            val list = productAdapter.items
             // 상세정보 페이지로
             override fun onItemClick(position: Int) {
                 val intent = Intent(this@MainActivity, DetailProductActivity::class.java).apply {

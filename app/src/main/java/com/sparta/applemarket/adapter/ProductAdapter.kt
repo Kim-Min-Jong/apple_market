@@ -13,26 +13,27 @@ import com.sparta.applemarket.util.Format
 
 class ProductAdapter(private val context: Context) :
     RecyclerView.Adapter<ProductAdapter.ViewHolder>() {
-    private val datas = arrayListOf<Product>()
+    private val _items = arrayListOf<Product>()
+    val items: List<Product>
+        get() = _items
     private lateinit var itemClickListener: ItemClickListener
 
     fun setOnItemClickListener(listener: ItemClickListener) {
         itemClickListener = listener
     }
 
-    fun addItems(items: List<Product>) {
-        datas.addAll(items)
+    fun addItems(list: List<Product>) {
+        _items.addAll(list)
         notifyDataSetChanged()
     }
-    fun getItems() = datas
 
     fun removeItem(position: Int) {
-        datas.removeAt(position)
+        _items.removeAt(position)
         notifyItemRemoved(position)
     }
 
     fun updateItem(id: Int, isChecked: Boolean) {
-        datas.find { it.id == id }?.run {
+        _items.find { it.id == id }?.run {
             isLiked = isChecked
             if(isChecked)
                 liked++
@@ -50,10 +51,10 @@ class ProductAdapter(private val context: Context) :
             )
         )
 
-    override fun getItemCount(): Int = datas.size
+    override fun getItemCount(): Int = _items.size
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) =
-        holder.bind(datas[position])
+        holder.bind(_items[position])
 
     inner class ViewHolder(
         private val binding: ItemSaleProductBinding
@@ -87,7 +88,5 @@ class ProductAdapter(private val context: Context) :
                 itemLiked.text = "${model.liked}"
             }
         }
-
-
     }
 }

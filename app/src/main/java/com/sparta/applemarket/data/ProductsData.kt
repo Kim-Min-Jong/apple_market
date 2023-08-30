@@ -4,8 +4,10 @@ import android.content.Context
 import com.sparta.applemarket.R
 import com.sparta.applemarket.model.Product
 
-class ProductsData(private val context: Context) {
-    private val list = listOf(
+class ProductsData(context: Context) {
+    val list: List<Product>
+        get() = _list
+    private val _list = listOf(
         Product(
             1,
             R.drawable.sample1,
@@ -117,6 +119,4 @@ class ProductsData(private val context: Context) {
             6
         )
     )
-
-    fun getList(): List<Product> = list
 }
