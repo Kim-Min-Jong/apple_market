@@ -8,7 +8,7 @@ import android.view.View
 import androidx.recyclerview.widget.RecyclerView
 import com.sparta.applemarket.util.FloatUtil.fromDpToPx
 
-class RecyclerViewDecoration() : RecyclerView.ItemDecoration() {
+class RecyclerViewDecoration : RecyclerView.ItemDecoration() {
     private val margin = 12f.fromDpToPx()
     override fun onDraw(c: Canvas, parent: RecyclerView, state: RecyclerView.State) {
         super.onDraw(c, parent, state)
@@ -36,6 +36,6 @@ class RecyclerViewDecoration() : RecyclerView.ItemDecoration() {
     ) {
         super.getItemOffsets(outRect, view, parent, state)
         // 바텀 마진
-        outRect.bottom = margin
+        outRect.bottom = 12
     }
 }
