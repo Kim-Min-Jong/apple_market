@@ -36,6 +36,6 @@ class RecyclerViewDecoration : RecyclerView.ItemDecoration() {
     ) {
         super.getItemOffsets(outRect, view, parent, state)
         // 바텀 마진
-        outRect.bottom = 12
+        outRect.bottom = margin
     }
 }
