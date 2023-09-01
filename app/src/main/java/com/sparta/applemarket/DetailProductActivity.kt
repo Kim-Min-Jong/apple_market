@@ -26,6 +26,7 @@ class DetailProductActivity : AppCompatActivity() {
         initButton()
     }
 
+    // 디테일 뷰 초기화
     private fun initViews(product: Product) = with(binding) {
         productImageView.setImageResource(product.image)
         cardImageView.clipToOutline = true
@@ -44,6 +45,7 @@ class DetailProductActivity : AppCompatActivity() {
             }
         }
     }
+    // 좋아요 체크박스 누를 때마다 실행 - 데이터 전달
     private fun putLikedData(product: Product, isChecked: Boolean) {
         val message = if(isChecked){
             R.string.add_interesting_product

@@ -8,6 +8,7 @@ import android.view.View
 import androidx.recyclerview.widget.RecyclerView
 import com.sparta.applemarket.util.FloatUtil.fromDpToPx
 
+// 리사이클러뷰 커스텀 구분선
 class RecyclerViewDecoration : RecyclerView.ItemDecoration() {
     private val margin = 12f.fromDpToPx()
     override fun onDraw(c: Canvas, parent: RecyclerView, state: RecyclerView.State) {

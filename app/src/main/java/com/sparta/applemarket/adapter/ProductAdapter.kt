@@ -18,6 +18,7 @@ class ProductAdapter(private val context: Context) :
         get() = _items
     private lateinit var itemClickListener: ItemClickListener
 
+    // 클릭 리스너 등록
     fun setOnItemClickListener(listener: ItemClickListener) {
         itemClickListener = listener
     }
@@ -27,11 +28,13 @@ class ProductAdapter(private val context: Context) :
         notifyDataSetChanged()
     }
 
+    // position의 아이템 제거
     fun removeItem(position: Int) {
         _items.removeAt(position)
         notifyItemRemoved(position)
     }
 
+    // id값에 맞는 item의 liked 수 변경
     fun updateItem(id: Int, isChecked: Boolean) {
         _items.find { it.id == id }?.run {
             isLiked = isChecked

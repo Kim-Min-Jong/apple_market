@@ -17,6 +17,7 @@ import com.sparta.applemarket.R
 
 class ProductNotification(private val context: Context) {
     private val myNotificationID = 1
+    // notification 실행 메서드
     fun runNotification() {
         createNotificationChannel()
         val notification = createNotification()
@@ -35,6 +36,7 @@ class ProductNotification(private val context: Context) {
         NotificationManagerCompat.from(context).notify(myNotificationID, notification)
     }
 
+    // notification 생성 메서드
     private fun createNotification(): Notification {
         val builder = NotificationCompat.Builder(context, CHANNEL_ID)
         builder.apply {
@@ -46,6 +48,7 @@ class ProductNotification(private val context: Context) {
         return builder.build()
     }
 
+    // notification channel 생성 메서드
     private fun createNotificationChannel() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) { // Android 8.0
             val channel = NotificationChannel(

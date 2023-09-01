@@ -31,6 +31,7 @@ class MainActivity : AppCompatActivity() {
             showCloseDialog()
         }
     }
+    // fade in-out 애니메이션 선언
     private val fadeInAnimation by lazy {
         AnimationUtils.loadAnimation(this@MainActivity, R.anim.fade_in)
     }
@@ -38,6 +39,7 @@ class MainActivity : AppCompatActivity() {
         AnimationUtils.loadAnimation(this@MainActivity, R.anim.fade_out)
     }
 
+    // 리사이클러뷰 스크롤 시 발생하는 이벤트 리스너
     private val scrollListener by lazy {
         object : RecyclerView.OnScrollListener() {
             override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
@@ -77,14 +79,17 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun initButton() = with(binding) {
+        // notification 실행
         notificationButton.setOnClickListener {
             ProductNotification(this@MainActivity).runNotification()
         }
+        // 리사이클러뷰 최상단으로 이동
         fabUp.setOnClickListener {
             mainRecyclerView.smoothScrollToPosition(0)
         }
     }
 
+    // 리사이클러뷰 초기화
     private fun initRecyclerView() = with(binding) {
         val list = ProductsData(this@MainActivity).list
         productAdapter = ProductAdapter(this@MainActivity).apply {
@@ -99,6 +104,7 @@ class MainActivity : AppCompatActivity() {
         setClickListener()
     }
 
+    // 리사이클러뷰 아이템에 click, LongClick 리스너 붙여주기
     private fun setClickListener() {
         productAdapter.setOnItemClickListener(object : ItemClickListener {
             val list = productAdapter.items
@@ -116,6 +122,7 @@ class MainActivity : AppCompatActivity() {
         })
     }
 
+    // LongClick시 삭제 다이얼로그
     private fun showRemoveItemDialog(position: Int) = DialogUtil.showDialog(
         this@MainActivity,
         R.drawable.icon_delete,
@@ -127,6 +134,7 @@ class MainActivity : AppCompatActivity() {
         { toast(getString(R.string.cancel_remove)) }
     )
 
+    // 앱 나가기 전 확인 다이얼로그
     private fun showCloseDialog() = DialogUtil.showDialog(
         this@MainActivity,
         R.drawable.dialog_done,
@@ -140,6 +148,7 @@ class MainActivity : AppCompatActivity() {
     override fun onBackPressed() =
         showCloseDialog()
 
+    // fab를 바로 gone 시키면 애니메이션과 맞지가 않아 visibility 강제 지연
     private fun delayVisibility(view: View, isVisible: Boolean) =
         Handler(Looper.getMainLooper()).postDelayed({
             view.isVisible = isVisible
